@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import axios from 'axios';
-import qs from 'qs';
+import { axios } from '../../__server/axios';
+// import qs from 'qs';
 
-import { cleanObject, useMount, useDebounce } from '../../tool';
+import { cleanObject, useDebounce } from '../../__tool';
 import { List } from './list';
 import { SearchPanel } from './search-panel';
 
@@ -16,22 +16,29 @@ export const ReojectListSearch = () => {
   const [list, setList] = useState([]);
   const debounceParam = useDebounce(param, 200);
 
-  useMount(() => {
-    axios({ url: 'http://localhost:8080/users' }).then((response) => {
-      const { data, statusText } = response;
-      if (statusText === 'OK') {
-        setUsers(data);
+  useEffect(() => {
+    axios({ url: 'http://localhost:8080/users', method: 'GET' }).then(
+      (response: any) => {
+        // console.log(response);
+
+        const { data, message } = response;
+        if (message === 'OK') {
+          setUsers(data);
+        }
       }
-    });
-  });
+    );
+  }, []);
   useEffect(() => {
     axios({
-      url: `http://localhost:8080/projects?${qs.stringify(
-        cleanObject(debounceParam)
-      )}`,
-    }).then((response) => {
-      const { data, statusText } = response;
-      if (statusText === 'OK') {
+      // url: `http://localhost:8080/projects?${qs.stringify(cleanObject(debounceParam))}`,
+      url: 'http://localhost:8080/projects',
+      method: 'GET',
+      params: cleanObject(debounceParam),
+    }).then((response: any) => {
+      console.log(response);
+
+      const { data, message } = response;
+      if (message === 'OK') {
         setList(data);
       }
     });

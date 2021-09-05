@@ -13,11 +13,6 @@ export function cleanObject(obj: any) {
   // });
   return result;
 }
-export const useMount = (callback: () => void) => {
-  useEffect(() => {
-    callback();
-  }, []);
-};
 
 export const useDebounce = <F>(value: F, time?: number): F => {
   const [debouncedValue, setDebouncedValue] = useState(value);
