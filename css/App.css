@@ -1,0 +1,13 @@
+/* yarn add @emotion/react @emotion/styled */
+html {
+  /* //浏览器默认像素是 16 ,16* 62.5%=10px rem 相对于html font-size
+  //1rem ===10 px */
+  font-size: 62.5%;
+}
+html body #root .App {
+  /* // viewport(视口的意思) height: === vh
+  1vh 相对于1%视口高度
+  
+  */
+  min-height: 100vh;
+}

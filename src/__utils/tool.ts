@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 
-export function cleanObject(obj: any) {
+export function cleanObject(obj: { [key: string]: unknown }) {
   const result = { ...obj };
   for (const key in result) {
-    if (result[key] === '' && result[key] !== 0) delete result[key];
+    if (
+      result[key] === '' ||
+      result[key] === undefined ||
+      result[key] === null
+    ) {
+      if (result[key] !== 0) delete result[key];
+    }
   }
-  // Object.keys(result).forEach((key) => {
-  //   const value = obj[key];
-  //   if (!value) {
-  //     delete result[key];
-  //   }
-  // });
   return result;
 }
 
@@ -21,6 +21,6 @@ export const useDebounce = <F>(value: F, time?: number): F => {
       setDebouncedValue(value);
     }, time);
     return () => clearTimeout(timeout);
-  }, [value]);
+  }, [time, value]);
   return debouncedValue;
 };

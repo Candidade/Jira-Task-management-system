@@ -1,14 +1,14 @@
 import React from 'react';
-import './App.css';
-
-// import { ReojectListSearch } from './screens/project-list';
-import { LoginScreen } from './screens/login';
+import './App.less';
+import { useAuth } from './context/auth-context';
+import { AuthenticatedApp } from './authenticated-app';
+import { UnauthenticatedApp } from './unauthenticated-app';
 
 function App() {
+  const { user } = useAuth();
   return (
     <div className="App">
-      {/* <ReojectListSearch /> */}
-      <LoginScreen />
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </div>
   );
 }

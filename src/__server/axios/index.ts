@@ -1,3 +1,5 @@
+const apiUrl = process.env.REACT_APP_API_URL;
+
 interface AxiosData {
   method: string;
   url: string;
@@ -16,7 +18,7 @@ export function axios({ method, url, params, data }: AxiosData) {
       str += `${key}=${params[key]}&`;
     }
     str = str.slice(0, -1);
-    xhr.open(method, `${url}?${str}`);
+    xhr.open(method, `${apiUrl}/${url}?${str}`);
 
     //3.发送
     if (
@@ -42,7 +44,7 @@ export function axios({ method, url, params, data }: AxiosData) {
             data: xhr.response,
           });
         } else {
-          reject('请求失败');
+          reject(xhr.response);
         }
       }
     };
